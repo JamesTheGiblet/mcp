@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Control Program - Bot Monitoring Dashboard</title>
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>Master Control Program</h1>
+                <div class="status-indicator">
+                    <span id="connection-status" class="status-dot offline"></span>
+                    <span>WebSocket: <span id="connection-text">Connecting...</span></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Statistics Cards -->
+            <section class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-icon">🤖</div>
+                    <div class="stat-content">
+                        <h3>Total Bots</h3>
+                        <span id="total-bots" class="stat-value">0</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-content">
+                        <h3>Active Bots</h3>
+                        <span id="active-bots" class="stat-value">0</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">📡</div>
+                    <div class="stat-content">
+                        <h3>ESP-NOW Messages</h3>
+                        <span id="esp-now-count" class="stat-value">0</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">🔋</div>
+                    <div class="stat-content">
+                        <h3>Avg Battery</h3>
+                        <span id="avg-battery" class="stat-value">--</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Bot List Panel -->
+                <section class="panel bot-list-panel">
+                    <h2>Bot Status</h2>
+                    <div class="bot-controls">
+                        <select id="bot-filter" title="Filter bots by status">
+                            <option value="all">All Bots</option>
+                            <option value="active">Active Only</option>
+                            <option value="inactive">Inactive Only</option>
+                        </select>
+                        <button id="refresh-bots">Refresh</button>
+                        <button id="cleanup-bots" title="Remove inactive bots older than 5 minutes">Cleanup Inactive</button>
+                    </div>
+                    <div id="bot-list" class="bot-list">
+                        <div class="loading">Loading bot data...</div>
+                    </div>
+                </section>
+
+                <!-- Network Topology -->
+                <section class="panel network-panel">
+                    <h2>Network Topology</h2>
+                    <div id="network-topology" class="network-container">
+                        <svg id="topology-svg"></svg>
+                    </div>
+                </section>
+
+                <!-- ESP-NOW Activity -->
+                <section class="panel activity-panel">
+                    <h2>ESP-NOW Activity</h2>
+                    <div class="activity-controls">
+                        <select id="activity-filter" title="Filter ESP-NOW activity messages">
+                            <option value="100">Last 100 messages</option>
+                            <option value="50">Last 50 messages</option>
+                            <option value="25">Last 25 messages</option>
+                        </select>
+                    </div>
+                    <div id="esp-now-activity" class="activity-list">
+                        <div class="loading">Loading ESP-NOW activity...</div>
+                    </div>
+                </section>
+
+                <!-- Charts Panel -->
+                <section class="panel charts-panel">
+                    <h2>Analytics</h2>
+                    <div class="chart-tabs">
+                        <button class="tab-button active" data-chart="battery">Battery Levels</button>
+                        <button class="tab-button" data-chart="activity">Bot Activity</button>
+                        <button class="tab-button" data-chart="signals">WiFi Signals</button>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="analytics-chart"></canvas>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Bot Detail Modal -->
+        <div id="bot-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modal-bot-id">Bot Details</h2>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div id="bot-details-content">
+                        <!-- Bot details will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/js/dashboard.js"></script>
+    <script src="/static/js/network-topology.js"></script>
+    <script src="/static/js/charts.js"></script>
+</body>
+</html>

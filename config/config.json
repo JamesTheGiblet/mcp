@@ -1,0 +1,41 @@
+{
+  "server": {
+    "host": "0.0.0.0",
+    "port": 8081,
+    "debug": false
+  },
+  "database": {
+    "path": "data/mcp.db",
+    "auto_backup": true,
+    "backup_interval_hours": 24
+  },
+  "monitoring": {
+    "bot_timeout_seconds": 30,
+    "health_check_interval_seconds": 10,
+    "max_inactive_bots": 100,
+    "data_retention_days": 30
+  },
+  "security": {
+    "enable_cors": true,
+    "allowed_origins": ["http://localhost:*", "http://127.0.0.1:*"],
+    "api_key_required": true,
+    "api_key": "api_secure_key_1234567890"
+  },
+  "logging": {
+    "level": "INFO",
+    "file_enabled": true,
+    "console_enabled": true,
+    "max_file_size_mb": 10,
+    "backup_count": 5
+  },
+  "esp_now": {
+    "message_types": [
+      "heartbeat",
+      "sensor_data",
+      "command",
+      "response",
+      "emergency"
+    ],
+    "max_message_size": 250
+  }
+}
