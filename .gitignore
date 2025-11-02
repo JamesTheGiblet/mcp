@@ -100,9 +100,16 @@ data/logs/
 ehthumbs.db
 Thumbs.db
 
-# Config files with sensitive data (uncomment if needed)
-# config/config.json
-# */config.h
+# Config files with sensitive data - SECURITY CRITICAL
+config/config.json
+**/config.h
+config.h
+**/secrets.h
+secrets.h
+**/credentials.h
+credentials.h
+# Keep template files but hide actual config files
+!**/config_template.h
 
 # Firmware builds
 data/firmware/
